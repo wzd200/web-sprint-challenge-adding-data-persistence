@@ -12,4 +12,14 @@ router.get('/', async (req, res, next) => {
     }
 })
 
+router.post('/', (req, res, next) => {
+    const newResource = req.body
+  
+    Resource.add(newResource)
+      .then(resource => {
+        res.status(201).json(resource)
+      })
+      .catch(next)
+  })
+
 module.exports = router
