@@ -12,6 +12,15 @@ router.get('/', async (req, res, next) => {
     }
 })
 
+router.get('/:project_id/', (req, res, next) => {
+    const { project_id } = req.params
+    Project.getById(project_id)
+      .then(project => {
+        res.json(project)
+      })
+      .catch(next)
+  })
+
 router.post('/', (req, res, next) => {
     const newProject = req.body
   
