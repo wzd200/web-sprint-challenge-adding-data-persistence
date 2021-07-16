@@ -22,6 +22,15 @@ const getAll = async () => {
     return tasksArray
 }
 
+const add = (task) => {
+    return db('tasks').insert(task)
+        .then(([task_id]) => {
+            return db('tasks')
+                .where('task_id', task_id).first()
+        })
+}
+
 module.exports = {
-    getAll
+    getAll,
+    add
 }
