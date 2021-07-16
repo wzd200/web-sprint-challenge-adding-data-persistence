@@ -1,22 +1,27 @@
 const db = require('../../data/dbConfig')
+const mappers = require('../../data/helpers/mappers')
 
-const getAll = () => {
-    const projectRows = db('projects')
+const getAll = async () => {
+    const projectRows = await db('projects')
 
-    return projectRows
+    const projectsArray = []
+
+    projectRows.map(projectRow => {
+        const result = {
+            project_name: projectRow.project_name,
+            project_description: projectRow.project_description,
+            project_completed: mappers.intToBoolean(projectRow.project_completed)
+        }
+        projectsArray.push(result)
+
+    })
+
+    
+
+    return projectsArray
 }
 
-// const getAll = async () => {
-//     const projectRows = await db('projects')
 
-//     const result = {
-//         project_name: projectRows[0].project_name,
-//         project_description: projectRows[0].project_description,
-//         project_completed: projectRows[0].project_completed
-//     }
-
-//     return result
-// }
 
 module.exports = {
     getAll
